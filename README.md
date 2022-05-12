@@ -1,2 +1,2 @@
 # SMBPi
-File Transfer Configuration automation using Python
+SMB Configuration and setup automation using python
