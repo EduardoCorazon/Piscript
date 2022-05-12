@@ -1,10 +1,30 @@
-#Made by: MercenaryHarpy6
-#5/11/2022
+'''
+Made by: MercenaryHarpy6
+Date:5/11/2022
+Description: Python smb file share
+'''
 #!/usr/bin/env python3
 
-import os
+#imports
+from config import *
+import subprocess
+import sys
+#consider using paramiko?
+
+def serversetup():
+    login = subprocess.run("ssh {user}@{host} {cmd}".format(user=RemoteUser, host=RemotePass, cmd='ls -l'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    
+    
+
+    #checks if there was an error
+    if login.returncode != 0:
+        print("\nfThere was an error")
+        print(login.stderr)
+    #subprocess.run(['powershell.exe', 'New-SmbShare', '-Path', 'E:\DSC\ ', '-Name', ShareFile]) # creates a share file on Server PC
+
+
 
 
 if __name__ == '__main__':
-    os.system('ls')
-    print("Test")
+    serversetup()
+    
