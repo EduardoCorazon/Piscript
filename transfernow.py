@@ -16,7 +16,8 @@ import sys
 
 def localdetail():
     # check if windows or linux
-    if sys.platform == "linux" OR "linux2"
+    if sys.platform == "linux":
+        print("This is linux")
     localinfo = subprocess.run("ifconfig -a | grep 'broadcast'", shell=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     print("Your network information is: \n" +
