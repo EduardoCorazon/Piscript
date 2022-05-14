@@ -1,32 +1,33 @@
 '''
 Made by: MercenaryHarpy6
 Date:5/11/2022
-Description: Python smb file share
+Description: Simple script that logs into my pi via ssh and runs whatever I want scripts
 '''
 #!/usr/bin/env python3
 
 #imports
-from config import *
 import subprocess
-import sys
-#consider using paramiko?
 
-def serversetup():
-    #login = subprocess.run("ssh {user}@{host} {cmd}".format(user=RemoteUser, host=RemotePass, cmd='ls -l'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    
+
+
+def info():
+    info.RemoteUser = str(input("Input Remote machine username: "))
+    info.RemotePass = str(input("Input Remote machine password: "))
+    print("If no commands are passed in, an nmap scan and metsploit will be started; if a common services is found running then it will be searched in metasploit")
+    info.command = str(input("input command you want to run here [for default leave empty]:"))
     
 
-    #checks if there was an error
-    '''
-    if login.returncode != 0:
-        print("\nfThere was an error")
-        print(login.stderr)
-    '''
-    subprocess.run(['powershell.exe', 'New-SmbShare', '-Path', 'C:\\Users\\ ', '-Name', 'ShareFile']) # creates a share file on Server PC
+def loginserver():
+    login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemotePass, cmd='nmap -A '), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    
+
+
+
 
 
 
 
 if __name__ == '__main__':
-    serversetup()
+    info()
+    #loginserver()
     
