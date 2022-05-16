@@ -16,12 +16,14 @@ import sys
 
 def localdetail():
     # check if windows or linux
-    if sys.platform == "linux":
-        print("This is linux")
+    print("-------------------------------------------------")
+    print("You are running a " + sys.platform + " system.")
+
     localinfo = subprocess.run("ifconfig -a | grep 'broadcast'", shell=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     print("Your network information is: \n" +
-          localinfo.stdout + "You are running: ")
+          localinfo.stdout)
+    print("-------------------------------------------------")
 
 
 def info():
