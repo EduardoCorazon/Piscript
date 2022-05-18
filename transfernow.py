@@ -15,11 +15,17 @@ import sys
 
 
 def localdetail():
-    # check if windows or linux
+    # check if windows or linux, this is so we can use the right network command later
     print("-------------------------------------------------")
     print("You are running a " + sys.platform + " system.")
+    # datermine if we use ip or if config
+    if sys.platform != "win32":
+        net = "ifconfig -a | grep 'broadcast'"
+    else:
+        net = "ipconfig | Select-String 'broadcast'"
 
-    localinfo = subprocess.run("ifconfig -a | grep 'broadcast'", shell=True,
+    # This will display the systems network information
+    localinfo = subprocess.run(net, shell=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     print("Your network information is: \n" +
           localinfo.stdout)
@@ -27,6 +33,7 @@ def localdetail():
 
 
 def info():
+    # set the variabels stored in the config file if any
     if username != '':
         print("Using configfile...\n")
         info.RemoteUser = username
