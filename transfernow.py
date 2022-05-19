@@ -40,7 +40,7 @@ def info():
         info.RemoteIP = remotehost
 
     else:
-
+        #if the config file is empty, then request information from the user
         info.RemoteUser = str(input("Input Remote machine username: "))
         info.RemoteIP = str(input("Input Remote machine IP: "))
     info.target = str(input("Input the target IP: "))
@@ -51,6 +51,8 @@ def info():
 
 
 def defaultcommand():
+    #this is the command that will run if no comman is typedin in the info()
+    #By deafults it will start metasploit and run an nmap scan on the target
     if (info.command == ''):
         print(
             "An nmap scan will now be done\nPlease wait while the scan is being performed")
@@ -60,6 +62,7 @@ def defaultcommand():
 
 
 def waitanimation():
+    #Loading/Waiting Animation for when the command is running
     if loginserver.waiting == False:
         for i in itertools.cycle(["⢿", "⣻", "⣽", "⣾", "⣷", "⣯", "⣟", "⡿"]):
             if loginserver.waiting == True:
