@@ -74,13 +74,15 @@ def waitanimation():
 
 
 def loginserver():
+    #This function logs into my Pi
+    #Still need to configure to add SSH key
     loginserver.waiting = False
     login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     loginserver.waiting = True
     print(login.stdout)
 
-
+#---------------------Main Program---------------------
 if __name__ == '__main__':
     localdetail()
     info()
