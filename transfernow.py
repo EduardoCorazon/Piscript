@@ -12,6 +12,7 @@ import itertools
 from threading import Thread
 import time
 import sys
+import os
 
 
 def localdetail():
@@ -38,6 +39,7 @@ def info():
         print("Using configfile...\n")
         info.RemoteUser = username
         info.RemoteIP = remotehost
+        info.thisUser = 
 
     else:
         #if the config file is empty, then request information from the user
@@ -54,8 +56,9 @@ def defaultcommand():
     #this is the command that will run if no comman is typedin in the info()
     #By deafults it will start metasploit and run an nmap scan on the target
     if (info.command == ''):
+        #change the code below to whatever you like
         print(
-            "An nmap scan will now be done\nPlease wait while the scan is being performed")
+            "An nmap scan will now be done\nPlease wait while the scan is being performed") 
         info.command = "msfconsole && nmap -A -vv {target}".format(
             target=info.target)
     return(info.command)
@@ -74,13 +77,19 @@ def waitanimation():
 
 
 def loginserver():
-    #This function logs into my Pi
-    #Still need to configure to add SSH key
-    loginserver.waiting = False
-    login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
+    #This function logs into my Pi | change TESTUSER
+    if os.path.basename("C:\\Users\\TESTUSER\\.ssh\\id_rsa") is True:
+        login = subprocess.run("ssh -i id_rsa {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     loginserver.waiting = True
     print(login.stdout)
+    else:
+   
+        loginserver.waiting = False
+        login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
+                           cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        loginserver.waiting = True
+        print(login.stdout)
 
 #---------------------Main Program---------------------
 if __name__ == '__main__':
