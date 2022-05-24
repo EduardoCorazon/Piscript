@@ -39,7 +39,6 @@ def info():
         print("Using configfile...\n")
         info.RemoteUser = username
         info.RemoteIP = remotehost
-        info.thisUser = 
 
     else:
         #if the config file is empty, then request information from the user
@@ -76,20 +75,30 @@ def waitanimation():
             time.sleep(0.1)
 
 
+def PrivCheck:
+    #This function checks if the user is going to use a private key
+    PrivYes = str(input("Will you be using a key-pair to log into ssh? [y/n]: "))
+    if PrivYes == "y":
+        #check if user has a private key location
+        Upriv = str(input("What's this computers username?:"))
+        
+            
 def loginserver():
-    #This function logs into my Pi | change TESTUSER
-    if os.path.basename("C:\\Users\\TESTUSER\\.ssh\\id_rsa") is True:
+    #Checks if there is an private Key to use
+    if os.path.basename("C:\\Users\\TESTUSER\\.ssh\\id_rsa") is True: #change TESTUSER
         login = subprocess.run("ssh -i id_rsa {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     loginserver.waiting = True
     print(login.stdout)
+    
     else:
-   
         loginserver.waiting = False
         login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         loginserver.waiting = True
         print(login.stdout)
+        
+
 
 #---------------------Main Program---------------------
 if __name__ == '__main__':
