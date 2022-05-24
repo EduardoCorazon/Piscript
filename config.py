@@ -8,5 +8,3 @@ username = '' #input the username of the remote host (aka the Pi)
 remotehost = ''#input the IP address of the remote host
 password = ''#input the password, if you're using ssh key you don't need this
 sshkeylocation = '' #Input the file location of your private ssh key
-#still need to test
-#consider askign user ?
