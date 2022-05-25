@@ -81,17 +81,15 @@ def PrivCheck:
     if PrivYes == "y":
         #check if user has a private key location
         Upriv = str(input("What's this computers username?:"))
-        
-            
-def loginserver():
-    #Checks if there is an private Key to use
-    if os.path.basename("C:\\Users\\TESTUSER\\.ssh\\id_rsa") is True: #change TESTUSER
-        login = subprocess.run("ssh -i id_rsa {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
+         login = subprocess.run("ssh -i id_rsa {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     loginserver.waiting = True
     print(login.stdout)
-    
     else:
+        loginserver()
+        
+            
+def loginserver():
         loginserver.waiting = False
         login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
