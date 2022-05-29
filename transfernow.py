@@ -1,18 +1,21 @@
 '''
 Made by: MercenaryHarpy6
 Date:5/11/2022
-Description: Simple script that logs into my pi via ssh and runs whatever I want scripts
+Description: 
+This is a simple test script to play around with for very simple practice, nothing important
+Simple script that logs into my pi via ssh and runs whatever scripts I want
+By default it will run an nmap scan on the target machine
 '''
 #!/usr/bin/env python3
 
 # imports
 from config import *
+import socket
 import subprocess
 import itertools
 from threading import Thread
 import time
 import sys
-import os
 
 
 def localdetail():
@@ -23,13 +26,13 @@ def localdetail():
     if sys.platform != "win32":
         net = "ifconfig -a | grep 'broadcast'"
     else:
-        net = "ipconfig | Select-String 'broadcast'"
+        net = "ipconfig"
+        print("Your device IP address is: " + socket.gethostbyname(socket.gethostname()))
 
     # This will display the systems network information
     localinfo = subprocess.run(net, shell=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    print("Your network information is: \n" +
-          localinfo.stdout)
+    print("Your network information is: \n" + localinfo.stdout)
     print("-------------------------------------------------")
 
 
@@ -44,8 +47,8 @@ def info():
         #if the config file is empty, then request information from the user
         info.RemoteUser = str(input("Input Remote machine username: "))
         info.RemoteIP = str(input("Input Remote machine IP: "))
-    info.target = str(input("Input the target IP: "))
-    print("If no commands are passed in, an nmap scan will be performed")
+    info.target = str(input("Input the target/victim IP: "))
+    print("If no commands are passed in, an nmap scan will be performed in background")
     info.command = str(
         input("input command you want to run here [for default leave empty]:"))
     defaultcommand()
@@ -58,7 +61,7 @@ def defaultcommand():
         #change the code below to whatever you like
         print(
             "An nmap scan will now be done\nPlease wait while the scan is being performed") 
-        info.command = "msfconsole && nmap -A -vv {target}".format(
+        info.command = "nmap -A -vv {target}".format(
             target=info.target)
     return(info.command)
 
@@ -73,23 +76,9 @@ def waitanimation():
             sys.stdout.write('\rloading ' + i)
             sys.stdout.flush()
             time.sleep(0.1)
-
-
-def PrivCheck:
-    #This function checks if the user is going to use a private key
-    PrivYes = str(input("Will you be using a key-pair to log into ssh? [y/n]: "))
-    if PrivYes == "y":
-        #check if user has a private key location
-        Upriv = str(input("What's this computers username?:"))
-         login = subprocess.run("ssh -i id_rsa {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
-                           cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    loginserver.waiting = True
-    print(login.stdout)
-    else:
-        loginserver()
-        
             
 def loginserver():
+        #logs into Pi and runs the commands
         loginserver.waiting = False
         login = subprocess.run("ssh {user}@{host} {cmd}".format(user=info.RemoteUser, host=info.RemoteIP,
                            cmd=info.command), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
